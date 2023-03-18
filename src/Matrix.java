@@ -1,45 +1,78 @@
 public class Matrix {
-    private int linhas;
-    private int colunas;
-    private int[][] elementos;
+    private int lines;
+    private int columns;
+    private int[][] elements;
 
-    public Matrix(int linhas, int colunas, int[] vetor) {
-        if (linhas * colunas != vetor.length) {
+    public Matrix(int lines, int columns, Vector vector) {
+        if (lines * columns != vector.getLength()) {
             System.out.println("Matriz inválida! O vetor tem um tamanho diferente da matriz!");
+            throw new IllegalArgumentException();
         }
-        this.linhas = linhas;
-        this.colunas = colunas;
-        this.elementos = new int[linhas][colunas];
+
+        this.lines = lines;
+        this.columns = columns;
+        this.elements = new int[lines][columns];
         int indice_vetor = 0;
-        for (int i = 0; i < linhas; i++) {
-            for (int j = 0; j < colunas; j++) {
-                this.elementos[i][j] = vetor[indice_vetor];
+        for (int i = 0; i < lines; i++) {
+            for (int j = 0; j < columns; j++) {
+                this.elements[i][j] = vector.get(indice_vetor);
                 indice_vetor++;
             }
         }
     }
 
-    public int getLinhas() {
-        return linhas;
+    public int getLines() {
+        return lines;
     }
 
-    public void setLinhas(int linhas) {
-        this.linhas = linhas;
+    public void setLines(int lines) {
+        this.lines = lines;
     }
 
-    public int getColunas() {
-        return colunas;
+    public int getColumns() {
+        return columns;
     }
 
-    public void setColunas(int colunas) {
-        this.colunas = colunas;
+    public int[] getLine(int line) {
+        return this.elements[line];
+    }
+
+    public int[] setLine(int lineIndex, int[] line) {
+        return this.elements[lineIndex] = line;
+    }
+
+    public void setColumns(int columns) {
+        this.columns = columns;
     }
 
     public int get(int i, int j) {
-        return this.elementos[i - 1][j - 1];
+        return this.elements[i][j];
     }
 
     public void set(int i, int j, int valor) {
-        this.elementos[i - 1][j - 1] = valor;
+        this.elements[i][j] = valor;
+    }
+
+    public String toString() {
+        StringBuilder str = new StringBuilder();
+
+        for (int i = 0; i < lines; i++) {
+            str.append("|");
+            for (int j = 0; j < columns; j++) {
+                str.append("\t");
+                if (elements[i][j] >= 0) {
+                    str.append(" ");
+                }
+                str.append(elements[i][j]);
+                str.append("\t");
+            }
+            str.append("|\n");
+        }
+
+        return str.toString();
+    }
+
+    public String toString(String title) {
+        return title + "\n" + this.toString();
     }
 }
