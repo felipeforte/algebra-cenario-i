@@ -1,78 +1,59 @@
 public class Matrix {
-    private int lines;
-    private int columns;
+    private int rows;
+    private int cols;
     private int[][] elements;
 
-    public Matrix(int lines, int columns, Vector vector) {
-        if (lines * columns != vector.getLength()) {
-            System.out.println("Matriz inválida! O vetor tem um tamanho diferente da matriz!");
-            throw new IllegalArgumentException();
-        }
-
-        this.lines = lines;
-        this.columns = columns;
-        this.elements = new int[lines][columns];
-        int indice_vetor = 0;
-        for (int i = 0; i < lines; i++) {
-            for (int j = 0; j < columns; j++) {
-                this.elements[i][j] = vector.get(indice_vetor);
-                indice_vetor++;
-            }
-        }
+    public Matrix(int rows, int cols, int[][] elements) {
+        this.rows = rows;
+        this.cols = cols;
+        this.elements = elements;
     }
 
-    public int getLines() {
-        return lines;
+    public int getCols() {
+        return cols;
     }
 
-    public void setLines(int lines) {
-        this.lines = lines;
+    public int getRows() {
+        return rows;
     }
 
-    public int getColumns() {
-        return columns;
+    public int[] getRow(int i) {
+        return elements[i];
     }
 
-    public int[] getLine(int line) {
-        return this.elements[line];
+    public void setRow(int i, int[] row) {
+        elements[i] = row;
     }
 
-    public int[] setLine(int lineIndex, int[] line) {
-        return this.elements[lineIndex] = line;
+    public int get(int row, int column) {
+        return elements[row][column];
     }
 
-    public void setColumns(int columns) {
-        this.columns = columns;
+    public void set(int i, int j, int value) {
+        elements[i][j] = value;
     }
 
-    public int get(int i, int j) {
-        return this.elements[i][j];
+    public int[][] getElements() {
+        return elements;
     }
 
-    public void set(int i, int j, int valor) {
-        this.elements[i][j] = valor;
+    public void swapRows(int i, int j) {
+        int[] temp = elements[i];
+        elements[i] = elements[j];
+        elements[j] = temp;
     }
 
     public String toString() {
         StringBuilder str = new StringBuilder();
 
-        for (int i = 0; i < lines; i++) {
-            str.append("|");
-            for (int j = 0; j < columns; j++) {
-                str.append("\t");
-                if (elements[i][j] >= 0) {
-                    str.append(" ");
-                }
-                str.append(elements[i][j]);
-                str.append("\t");
+        for (int i = 0; i < rows; i++) {
+            str.append("| ");
+            for (int j = 0; j < cols; j++) {
+                str.append(elements[i][j]).append(" ");
             }
             str.append("|\n");
         }
 
         return str.toString();
-    }
-
-    public String toString(String title) {
-        return title + "\n" + this.toString();
     }
 }

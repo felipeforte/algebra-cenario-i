@@ -1,189 +1,144 @@
 public class AlgebraLinear {
-    public Matrix transposeMatrix(Matrix matrix) {
-        int rows = matrix.getLines();
-        int columns = matrix.getColumns();
+    public Matrix transpose(Matrix a) {
+        int rows = a.getCols();
+        int cols = a.getRows();
+        int[][] elements = new int[rows][cols];
 
-        Vector vector = new Vector(rows * columns, new int[rows * columns]);
-
-        int indice_vetor = 0;
-        for (int i = 0; i < columns; i++) {
-            for (int j = 0; j < rows; j++) {
-                vector.set(indice_vetor, matrix.get(j, i));
-                indice_vetor++;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                elements[i][j] = a.get(j, i);
             }
         }
 
-        return new Matrix(columns, rows, vector);
+        return new Matrix(rows, cols, elements);
     }
 
-    public Matrix sumMatrix(Matrix matrixOne, Matrix matrixTwo) {
-        int rows = matrixOne.getLines();
-        int columns = matrixOne.getColumns();
+    public Matrix sum(Matrix a, Matrix b) {
+        int rows = a.getRows();
+        int cols = a.getCols();
+        int[][] elements = new int[rows][cols];
 
-        Vector vector = new Vector(rows * columns, new int[rows * columns]);
-
-        int indice_vetor = 0;
         for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                int sum = matrixOne.get(i, j) + matrixTwo.get(i, j);
-                vector.set(indice_vetor, sum);
-                indice_vetor++;
+            for (int j = 0; j < cols; j++) {
+                elements[i][j] = a.get(i, j) + b.get(i, j);
             }
         }
 
-        return new Matrix(rows, columns, vector);
+        return new Matrix(rows, cols, elements);
     }
 
-    public Matrix timesMatrix(Matrix matrixOne, Matrix matrixTwo) {
-        int rows = matrixOne.getLines();
-        int columns = matrixTwo.getColumns();
+    public Matrix times(int a, Matrix b) {
+        int rows = b.getRows();
+        int cols = b.getCols();
+        int[][] elements = new int[rows][cols];
 
-        Vector vector = new Vector(rows * columns, new int[rows * columns]);
-
-        int indice_vetor = 0;
         for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
+            for (int j = 0; j < cols; j++) {
+                elements[i][j] = a * b.get(i, j);
+            }
+        }
+
+        return new Matrix(rows, cols, elements);
+    }
+
+    public Matrix times(Matrix a, Matrix b) {
+        int rows = a.getRows();
+        int cols = a.getCols();
+        int[][] elements = new int[rows][cols];
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                elements[i][j] = a.get(i, j) * b.get(i, j);
+            }
+        }
+
+        return new Matrix(rows, cols, elements);
+    }
+
+    public Matrix dot(Matrix a, Matrix b) {
+        //validate matrix dimensions
+        if (a.getCols() != b.getRows()) {
+            throw new IllegalArgumentException("Matrix dimensions must agree.");
+        }
+
+        int rows = a.getRows();
+        int cols = b.getCols();
+        int[][] elements = new int[rows][cols];
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
                 int sum = 0;
-                for (int k = 0; k < matrixOne.getColumns(); k++) {
-                    sum += matrixOne.get(i, k) * matrixTwo.get(k, j);
+                for (int k = 0; k < a.getCols(); k++) {
+                    sum += a.get(i, k) * b.get(k, j);
                 }
-                vector.set(indice_vetor, sum);
-                indice_vetor++;
+                elements[i][j] = sum;
             }
         }
 
-        return new Matrix(rows, columns, vector);
+        return new Matrix(rows, cols, elements);
     }
 
-    public Matrix timesMatrix(int scalar, Matrix matrix) {
-        int rows = matrix.getLines();
-        int columns = matrix.getColumns();
-
-        Vector vector = new Vector(rows * columns, new int[rows * columns]);
-
-        int indice_vetor = 0;
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                int sum = matrix.get(i, j) * scalar;
-                vector.set(indice_vetor, sum);
-                indice_vetor++;
-            }
-        }
-
-        return new Matrix(rows, columns, vector);
-    }
-
-    //metodo gauss jordan para eliminacao gaussiana de uma matriz
-    public Matrix gaussJordan(Matrix matrix) {
-        int rows = matrix.getLines();
-        int columns = matrix.getColumns();
-
-        for (int i = 0; i < rows; i++) {
-            // find pivot and swap
-            int max = i;
-            for (int j = i + 1; j < rows; j++) {
-                if (Math.abs(matrix.get(j, i)) > Math.abs(matrix.get(max, i))) {
-                    max = j;
-                }
-            }
-
-            Matrix temp = new Matrix(1, columns, new Vector(columns, matrix.getLine(max)));
-            matrix.setLine(max, matrix.getLine(i));
-            matrix.setLine(i, temp.getLine(0));
-
-            // reduce the row
-            for (int j = i + 1; j < rows; j++) {
-                int f = matrix.get(j, i) / matrix.get(i, i);
-                for (int k = i + 1; k < columns; k++) {
-                    matrix.set(j, k, matrix.get(j, k) - matrix.get(i, k) * f);
-                }
-                matrix.set(j, i, 0);
-            }
-
-        }
-
-        //back substitution
-        for (int i = rows - 1; i >= 0; i--) {
-            int f = matrix.get(i, i);
-            for (int j = i + 1; j < columns - 1; j++) {
-                matrix.set(i, j, matrix.get(i, j) / f);
-            }
-            matrix.set(i, i, 1);
-
-            for (int j = i - 1; j >= 0; j--) {
-                f = matrix.get(j, i);
-                for (int k = i + 1; k < columns; k++) {
-                    matrix.set(j, k, matrix.get(j, k) - matrix.get(i, k) * f);
-                }
-                matrix.set(j, i, 0);
-            }
-        }
-
-        // normalize diagonal
-        for (int i = 0; i < rows; i++) {
-            int f = matrix.get(i, i);
-            for (int j = 0; j < columns; j++) {
-                matrix.set(i, j, matrix.get(i, j) / f);
-            }
-        }
-
-        return matrix;
-    }
-
-//    Um método chamado gauss que tem como função realizar a eliminação gaussiana em uma
-//    Matriz. O método deve receber como parâmetro um objeto da classe Matrix e retornar a
-//    Matrix resultante da operação de eliminação gaussiana.
     public Matrix gauss(Matrix matrix) {
-        int rows = matrix.getLines();
-        int columns = matrix.getColumns();
+        int numRows = matrix.getRows();
+        int numCols = matrix.getCols();
 
-        for (int i = 0; i < rows; i++) {
-            // find pivot and swap
-            int max = i;
-            for (int j = i + 1; j < rows; j++) {
-                if (Math.abs(matrix.get(j, i)) > Math.abs(matrix.get(max, i))) {
-                    max = j;
+        Matrix result = new Matrix(numRows, numCols, matrix.getElements());
+
+        // verifica se a matriz possui linhas com os coeficientes iguais a zero
+        for (int i = 0; i < numRows; i++) {
+            boolean allZeros = true;
+            for (int j = 0; j < numCols - 1; j++) {
+                if (result.get(i, j) != 0) {
+                    allZeros = false;
+                    break;
+                }
+            }
+            if (allZeros) {
+                throw new IllegalArgumentException("Sistema impossível. Matrix contém uma impossibilidade.");
+            }
+        }
+
+        // Realiza a eliminação gaussiana
+        for (int line = 0; line < numRows; line++) {
+            // Encontra o pivô da coluna
+            int max = result.get(line, line);
+            int maxRow = line;
+            for (int cols = line + 1; cols < numRows; cols++) {
+                int abs = result.get(line, cols);
+                if (abs > max) {
+                    max = abs;
+                    maxRow = cols;
                 }
             }
 
-            Matrix temp = new Matrix(1, columns, new Vector(columns, matrix.getLine(max)));
-            matrix.setLine(max, matrix.getLine(i));
-            matrix.setLine(i, temp.getLine(0));
-
-            // reduce the row
-            for (int j = i + 1; j < rows; j++) {
-                int f = matrix.get(j, i) / matrix.get(i, i);
-                for (int k = i + 1; k < columns; k++) {
-                    matrix.set(j, k, matrix.get(j, k) - matrix.get(i, k) * f);
+            // Troca as linhas k e maxRow
+            if (maxRow != line) {
+                for (int j = 0; j < numRows; j++) {
+                    int temp = result.get(line, j);
+                    result.set(line, j, result.get(maxRow, j));
+                    result.set(maxRow, j, temp);
                 }
-                matrix.set(j, i, 0);
             }
 
-        }
-
-        return matrix;
-    }
-
-
-//    Um método chamado solve que tem como função um sistema de equação linear. O método
-//    deve receber como parâmetro um objeto da classe Matrix (que representa uma matriz
-//            aumentada) e retornar a Matrix resultante da resolução do sistema linear.
-    public Matrix solve(Matrix matrix) {
-        int rows = matrix.getLines();
-        int columns = matrix.getColumns();
-
-        Matrix matrixA = new Matrix(rows, columns - 1, new Vector(rows * (columns - 1), new int[rows * (columns - 1)]));
-        Matrix matrixB = new Matrix(rows, 1, new Vector(rows, new int[rows]));
-
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns - 1; j++) {
-                matrixA.set(i, j, matrix.get(i, j));
+            // Zera os elementos abaixo do pivô
+            for (int i = line + 1; i < numRows; i++) {
+                int factor = result.get(i, line) / result.get(line, line);
+                result.set(i, line, 0);
+                for (int j = line + 1; j < numCols; j++) {
+                    result.set(i, j, result.get(i, j) - factor * result.get(line, j));
+                }
             }
-            matrixB.set(i, 0, matrix.get(i, columns - 1));
+
+            // converte numeros negativos em positivos
+            for (int i = 0; i < numRows; i++) {
+                for (int j = 0; j < numCols; j++) {
+                    if (result.get(i, j) < 0) {
+                        result.set(i, j, result.get(i, j) * -1);
+                    }
+                }
+            }
         }
 
-        Matrix matrixAInverse = gaussJordan(matrixA);
-
-        return timesMatrix(matrixAInverse, matrixB);
+        return result;
     }
 }
