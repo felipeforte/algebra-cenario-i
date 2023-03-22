@@ -4,6 +4,34 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+
+        // Definir a matriz aumentada
+        double[][] matriz = {{1, 2, 4, 0},
+                {0, 1, 2, 9},
+                {0, 0, 0, 0}};
+
+        // Aplicar o algoritmo de Gauss-Jordan
+        for (int k = 0; k < 3; k++) {
+            double pivo = matriz[k][k];
+            for (int j = k; j < 4; j++) {
+                matriz[k][j] /= pivo;
+            }
+            for (int i = 0; i < 3; i++) {
+                if (i != k) {
+                    double fator = matriz[i][k];
+                    for (int j = k; j < 4; j++) {
+                        matriz[i][j] -= fator * matriz[k][j];
+                    }
+                }
+            }
+        }
+
+        // Exibir o resultado
+        System.out.println("x = " + matriz[0][3]);
+        System.out.println("y = " + matriz[1][3]);
+        System.out.println("z = " + matriz[2][3]);
+
+
         Scanner scanner = new Scanner(System.in);
 
         showMenu();
@@ -26,6 +54,9 @@ public class Main {
                     break;
                 case 5:
                     gauss();
+                    break;
+                case 6:
+                    solve();
                     break;
                 default:
                     System.out.println(ConsoleColors.RED_BACKGROUND_BRIGHT + ConsoleColors.BLACK_BOLD);
@@ -53,6 +84,7 @@ public class Main {
         System.out.println("3 - Multiplicar uma matriz por um escalar");
         System.out.println("4 - Multiplicar duas matrizes");
         System.out.println("5 - Resolver um sistema linear");
+        System.out.println("6 - Solve");
         System.out.println(ConsoleColors.RESET);
     }
 
@@ -128,15 +160,15 @@ public class Main {
         System.out.println(ConsoleColors.RESET);
 
         System.out.println("Digite a quantidade de linhas da 1ª matriz: ");
-        int qtyLines1 = scanner.nextInt();
+        int qtyLines = scanner.nextInt();
         System.out.println("Digite a quantidade de colunas da 1ª matriz: ");
-        int qtyColumns1 = scanner.nextInt();
+        int qtyColumns = scanner.nextInt();
 
-        int[][] preMatrix1 = new int[qtyLines1][qtyColumns1];
+        int[][] preMatrix1 = new int[qtyLines][qtyColumns];
 
         System.out.println("1ª Matriz:");
-        for (int i = 0; i < qtyLines1; i++) {
-            for (int j = 0; j < qtyColumns1; j++) {
+        for (int i = 0; i < qtyLines; i++) {
+            for (int j = 0; j < qtyColumns; j++) {
                 System.out.println("Digite o valor da linha " + (i + 1) + " e coluna " + (j + 1) + ": ");
                 preMatrix1[i][j] = scanner.nextInt();
             }
@@ -144,23 +176,18 @@ public class Main {
 
         System.out.println("-------------------- \n");
 
-        System.out.println("Digite a quantidade de linhas da 2ª matriz: ");
-        int qtyLines2 = scanner.nextInt();
-        System.out.println("Digite a quantidade de colunas da 2ª matriz: ");
-        int qtyColumns2 = scanner.nextInt();
-
-        int[][] preMatrix2 = new int[qtyLines2][qtyColumns2];
+        int[][] preMatrix2 = new int[qtyLines][qtyColumns];
 
         System.out.println("2ª Matriz:");
-        for (int i = 0; i < qtyLines2; i++) {
-            for (int j = 0; j < qtyColumns2; j++) {
+        for (int i = 0; i < qtyLines; i++) {
+            for (int j = 0; j < qtyColumns; j++) {
                 System.out.println("Digite o valor da linha " + (i + 1) + " e coluna " + (j + 1) + ": ");
                 preMatrix2[i][j] = scanner.nextInt();
             }
         }
 
-        Matrix matrix1 = new Matrix(qtyLines1, qtyColumns1, preMatrix1);
-        Matrix matrix2 = new Matrix(qtyLines2, qtyColumns2, preMatrix2);
+        Matrix matrix1 = new Matrix(qtyLines, qtyColumns, preMatrix1);
+        Matrix matrix2 = new Matrix(qtyLines, qtyColumns, preMatrix2);
 
         showMatrix(matrix1, matrix2);
         System.out.println("Matriz 1 + Matriz 2: ");
@@ -283,5 +310,37 @@ public class Main {
 
         System.out.println("Solução: ");
         showMatrix(algebra.gauss(matrix));
+    }
+
+    public static void solve() {
+        Scanner scanner = new Scanner(System.in);
+        AlgebraLinear algebra = new AlgebraLinear();
+
+        System.out.println(ConsoleColors.GREEN_BACKGROUND_BRIGHT + ConsoleColors.BLACK_BOLD);
+        System.out.println("Resolver um sistema linear \n");
+        System.out.println(ConsoleColors.RESET);
+
+        System.out.println("Digite a quantidade de linhas da matriz: ");
+        int qtyLines = scanner.nextInt();
+        System.out.println("Digite a quantidade de colunas da matriz: ");
+        int qtyColumns = scanner.nextInt();
+
+        int[][] preMatrix = new int[qtyLines][qtyColumns];
+
+        System.out.println("Matriz:");
+        for (int i = 0; i < qtyLines; i++) {
+            for (int j = 0; j < qtyColumns; j++) {
+                System.out.println("Digite o valor da linha " + (i + 1) + " e coluna " + (j + 1) + ": ");
+                preMatrix[i][j] = scanner.nextInt();
+            }
+        }
+
+        Matrix matrix = new Matrix(qtyLines, qtyColumns, preMatrix);
+
+        System.out.println("Matriz digitada: ");
+        showMatrix(matrix);
+
+        System.out.println("Solução: ");
+        showMatrix(algebra.solve(matrix));
     }
 }

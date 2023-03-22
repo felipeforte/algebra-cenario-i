@@ -27,6 +27,7 @@ public class AlgebraLinear {
         return new Matrix(rows, cols, elements);
     }
 
+    //escalar * matrix
     public Matrix times(int a, Matrix b) {
         int rows = b.getRows();
         int cols = b.getCols();
@@ -41,6 +42,7 @@ public class AlgebraLinear {
         return new Matrix(rows, cols, elements);
     }
 
+    // matrix * matrix
     public Matrix times(Matrix a, Matrix b) {
         int rows = a.getRows();
         int cols = a.getCols();
@@ -122,7 +124,8 @@ public class AlgebraLinear {
 
             // Zera os elementos abaixo do pivô
             for (int i = line + 1; i < numRows; i++) {
-                int factor = result.get(i, line) / result.get(line, line);
+                int divisor = result.get(line, line);
+                int factor = result.get(i, line) /  (divisor == 0 ? 1 : divisor);
                 result.set(i, line, 0);
                 for (int j = line + 1; j < numCols; j++) {
                     result.set(i, j, result.get(i, j) - factor * result.get(line, j));
@@ -141,4 +144,80 @@ public class AlgebraLinear {
 
         return result;
     }
+
+    public Matrix gauss2(Matrix a) {
+
+        int n = a.getRows();
+        int m = a.getCols();
+
+        // Faz a eliminação gaussiana
+        for (int i = 0; i < n; i++) {
+            int pivotRow = i;
+            for (int j = i + 1; j < n; j++) {
+                if (Math.abs(a.get(j, i)) > Math.abs(a.get(pivotRow, i))) {
+                    pivotRow = j;
+                }
+            }
+            if (pivotRow != i) {
+                a.swapRows(i, pivotRow);
+            }
+
+            for (int j = i + 1; j < m; j++) {
+                a.set(i, j, a.get(i, j) / a.get(i, i));
+            }
+            a.set(i, i, 1);
+
+            for (int j = i + 1; j < n; j++) {
+                for (int k = i + 1; k < m; k++) {
+                    a.set(j, k, a.get(j, k) - a.get(j, i) * a.get(i, k));
+                }
+                a.set(j, i, 0);
+            }
+        }
+
+        // Faz a retrosubstituição
+        for (int i = n - 1; i >= 0; i--) {
+            for (int j = i - 1; j >= 0; j--) {
+                for (int k = m - 2; k > i; k--) {
+                    a.set(j, m - 1, a.get(j, m - 1) - a.get(j, k) * a.get(k, m - 1));
+                    a.set(j, k, 0);
+                }
+            }
+        }
+
+        return a;
+    }
+
+    public Matrix solve(Matrix a) {
+        a = gauss2(a);
+
+        // Definir a matriz aumentada
+        double[][] matriz = {{1, 2, 4, 0},
+                {0, 1, 2, 9},
+                {0, 0, 1, 3}};
+
+        // Aplicar o algoritmo de Gauss-Jordan
+        for (int k = 0; k < 3; k++) {
+            double pivo = matriz[k][k];
+            for (int j = k; j < 4; j++) {
+                matriz[k][j] /= pivo;
+            }
+            for (int i = 0; i < 3; i++) {
+                if (i != k) {
+                    double fator = matriz[i][k];
+                    for (int j = k; j < 4; j++) {
+                        matriz[i][j] -= fator * matriz[k][j];
+                    }
+                }
+            }
+        }
+
+        // Exibir o resultado
+        System.out.println("x = " + matriz[0][3]);
+        System.out.println("y = " + matriz[1][3]);
+        System.out.println("z = " + matriz[2][3]);
+
+        return a;
+    }
+
 }

@@ -29,8 +29,8 @@ public class Matrix {
         return elements[row][column];
     }
 
-    public void set(int i, int j, int value) {
-        elements[i][j] = value;
+    public void set(int row, int column, int value) {
+        elements[row][column] = value;
     }
 
     public int[][] getElements() {
