@@ -125,7 +125,7 @@ public class AlgebraLinear {
             // Zera os elementos abaixo do pivô
             for (int i = line + 1; i < numRows; i++) {
                 int divisor = result.get(line, line);
-                int factor = result.get(i, line) /  (divisor == 0 ? 1 : divisor);
+                int factor = result.get(i, line) / (divisor == 0 ? 1 : divisor);
                 result.set(i, line, 0);
                 for (int j = line + 1; j < numCols; j++) {
                     result.set(i, j, result.get(i, j) - factor * result.get(line, j));
@@ -188,36 +188,38 @@ public class AlgebraLinear {
         return a;
     }
 
-    public Matrix solve(Matrix a) {
+    public Vector solve(Matrix a) {
         a = gauss2(a);
 
-        // Definir a matriz aumentada
-        double[][] matriz = {{1, 2, 4, 0},
-                {0, 1, 2, 9},
-                {0, 0, 1, 3}};
-
         // Aplicar o algoritmo de Gauss-Jordan
-        for (int k = 0; k < 3; k++) {
-            double pivo = matriz[k][k];
-            for (int j = k; j < 4; j++) {
-                matriz[k][j] /= pivo;
+        for (int k = 0; k < a.getRows(); k++) {
+            int pivo = a.get(k, k);
+            for (int j = k; j < a.getCols(); j++) {
+                a.set(k, j, a.get(k, j) / pivo);
             }
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < a.getRows(); i++) {
                 if (i != k) {
-                    double fator = matriz[i][k];
-                    for (int j = k; j < 4; j++) {
-                        matriz[i][j] -= fator * matriz[k][j];
+                    int fator = a.get(i, k);
+                    for (int j = k; j < a.getCols(); j++) {
+                        a.set(i, j, a.get(i, j) - fator * a.get(k, j));
                     }
                 }
             }
         }
 
-        // Exibir o resultado
-        System.out.println("x = " + matriz[0][3]);
-        System.out.println("y = " + matriz[1][3]);
-        System.out.println("z = " + matriz[2][3]);
+        int[] elements = new int[3];
+        for (int i = 0; i < a.getRows(); i++) {
+            elements[i] = a.get(i, 3);
+        }
 
-        return a;
+        Vector vector = new Vector(3, elements);
+
+        // Exibir o resultado
+        System.out.println("x = " + vector.get(0));
+        System.out.println("y = " + vector.get(1));
+        System.out.println("z = " + vector.get(2));
+
+        return vector;
     }
 
 }

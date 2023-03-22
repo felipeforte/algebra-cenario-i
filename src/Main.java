@@ -6,31 +6,9 @@ public class Main {
     public static void main(String[] args) {
 
         // Definir a matriz aumentada
-        double[][] matriz = {{1, 2, 4, 0},
-                {0, 1, 2, 9},
-                {0, 0, 0, 0}};
-
-        // Aplicar o algoritmo de Gauss-Jordan
-        for (int k = 0; k < 3; k++) {
-            double pivo = matriz[k][k];
-            for (int j = k; j < 4; j++) {
-                matriz[k][j] /= pivo;
-            }
-            for (int i = 0; i < 3; i++) {
-                if (i != k) {
-                    double fator = matriz[i][k];
-                    for (int j = k; j < 4; j++) {
-                        matriz[i][j] -= fator * matriz[k][j];
-                    }
-                }
-            }
-        }
-
-        // Exibir o resultado
-        System.out.println("x = " + matriz[0][3]);
-        System.out.println("y = " + matriz[1][3]);
-        System.out.println("z = " + matriz[2][3]);
-
+//        double[][] matriz = {{1, 2, 4, 0},
+//                {0, 1, 2, 9},
+//                {0, 0, 0, 0}};
 
         Scanner scanner = new Scanner(System.in);
 
@@ -86,6 +64,14 @@ public class Main {
         System.out.println("5 - Resolver um sistema linear");
         System.out.println("6 - Solve");
         System.out.println(ConsoleColors.RESET);
+    }
+
+    public static void showVector(Vector vector) {
+        System.out.println(
+                ConsoleColors.CYAN_BACKGROUND_BRIGHT +
+                        ConsoleColors.BLACK_BOLD +
+                        vector + ConsoleColors.RESET
+        );
     }
 
     public static void showMatrix(Matrix matrix) {
@@ -341,6 +327,6 @@ public class Main {
         showMatrix(matrix);
 
         System.out.println("Solução: ");
-        showMatrix(algebra.solve(matrix));
+        showVector(algebra.solve(matrix));
     }
 }
