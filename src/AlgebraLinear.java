@@ -2,7 +2,7 @@ public class AlgebraLinear {
     public Matrix transpose(Matrix a) {
         int rows = a.getCols();
         int cols = a.getRows();
-        int[][] elements = new int[rows][cols];
+        double[][] elements = new double[rows][cols];
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
@@ -16,7 +16,7 @@ public class AlgebraLinear {
     public Matrix sum(Matrix a, Matrix b) {
         int rows = a.getRows();
         int cols = a.getCols();
-        int[][] elements = new int[rows][cols];
+        double[][] elements = new double[rows][cols];
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
@@ -31,7 +31,7 @@ public class AlgebraLinear {
     public Matrix times(int a, Matrix b) {
         int rows = b.getRows();
         int cols = b.getCols();
-        int[][] elements = new int[rows][cols];
+        double[][] elements = new double[rows][cols];
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
@@ -46,7 +46,7 @@ public class AlgebraLinear {
     public Matrix times(Matrix a, Matrix b) {
         int rows = a.getRows();
         int cols = a.getCols();
-        int[][] elements = new int[rows][cols];
+        double[][] elements = new double[rows][cols];
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
@@ -65,7 +65,7 @@ public class AlgebraLinear {
 
         int rows = a.getRows();
         int cols = b.getCols();
-        int[][] elements = new int[rows][cols];
+        double[][] elements = new double[rows][cols];
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
@@ -103,10 +103,10 @@ public class AlgebraLinear {
         // Realiza a eliminação gaussiana
         for (int line = 0; line < numRows; line++) {
             // Encontra o pivô da coluna
-            int max = result.get(line, line);
+            double max = result.get(line, line);
             int maxRow = line;
             for (int cols = line + 1; cols < numRows; cols++) {
-                int abs = result.get(line, cols);
+                double abs = result.get(line, cols);
                 if (abs > max) {
                     max = abs;
                     maxRow = cols;
@@ -116,7 +116,7 @@ public class AlgebraLinear {
             // Troca as linhas k e maxRow
             if (maxRow != line) {
                 for (int j = 0; j < numRows; j++) {
-                    int temp = result.get(line, j);
+                    double temp = result.get(line, j);
                     result.set(line, j, result.get(maxRow, j));
                     result.set(maxRow, j, temp);
                 }
@@ -124,8 +124,8 @@ public class AlgebraLinear {
 
             // Zera os elementos abaixo do pivô
             for (int i = line + 1; i < numRows; i++) {
-                int divisor = result.get(line, line);
-                int factor = result.get(i, line) / (divisor == 0 ? 1 : divisor);
+                double divisor = result.get(line, line);
+                double factor = result.get(i, line) / (divisor == 0 ? 1 : divisor);
                 result.set(i, line, 0);
                 for (int j = line + 1; j < numCols; j++) {
                     result.set(i, j, result.get(i, j) - factor * result.get(line, j));
@@ -193,13 +193,13 @@ public class AlgebraLinear {
 
         // Aplicar o algoritmo de Gauss-Jordan
         for (int k = 0; k < a.getRows(); k++) {
-            int pivo = a.get(k, k);
+            double pivo = a.get(k, k);
             for (int j = k; j < a.getCols(); j++) {
                 a.set(k, j, a.get(k, j) / pivo);
             }
             for (int i = 0; i < a.getRows(); i++) {
                 if (i != k) {
-                    int fator = a.get(i, k);
+                    double fator = a.get(i, k);
                     for (int j = k; j < a.getCols(); j++) {
                         a.set(i, j, a.get(i, j) - fator * a.get(k, j));
                     }
@@ -207,7 +207,7 @@ public class AlgebraLinear {
             }
         }
 
-        int[] elements = new int[3];
+        double[] elements = new double[3];
         for (int i = 0; i < a.getRows(); i++) {
             elements[i] = a.get(i, 3);
         }

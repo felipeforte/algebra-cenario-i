@@ -54,7 +54,7 @@ public class Main {
     }
 
     public static void showMenu() {
-        System.out.println(ConsoleColors.BLUE_BACKGROUND_BRIGHT + ConsoleColors.BLACK_BOLD + "MENU");
+        System.out.println(ConsoleColors.BLUE_BACKGROUND_BRIGHT + ConsoleColors.BLACK_BOLD + "MENU [BETA]");
         System.out.println("Escolha uma opção: ");
         System.out.println("0 - Sair");
         System.out.println("1 - Transpor uma matriz");
@@ -63,6 +63,7 @@ public class Main {
         System.out.println("4 - Multiplicar duas matrizes");
         System.out.println("5 - Resolver um sistema linear");
         System.out.println("6 - Solve");
+        System.out.println(ConsoleColors.RED_BACKGROUND_BRIGHT + ConsoleColors.BLACK_BOLD + "Versão [BETA]");
         System.out.println(ConsoleColors.RESET);
     }
 
@@ -83,13 +84,13 @@ public class Main {
     }
 
     public static void showMatrix(Matrix matrix1, Matrix matrix2) {
-        System.out.print(
+        System.out.println(
                 ConsoleColors.CYAN_BACKGROUND_BRIGHT +
                         ConsoleColors.BLACK_BOLD +
                         matrix1
         );
 
-        System.out.print(
+        System.out.println(
                 ConsoleColors.CYAN_BACKGROUND_BRIGHT +
                         ConsoleColors.BLACK_BOLD +
                         matrix2 +
@@ -119,7 +120,7 @@ public class Main {
             return;
         }
 
-        int[][] preMatrix = new int[qtyLines][qtyColumns];
+        double[][] preMatrix = new double[qtyLines][qtyColumns];
 
         for (int i = 0; i < qtyLines; i++) {
             for (int j = 0; j < qtyColumns; j++) {
@@ -150,7 +151,7 @@ public class Main {
         System.out.println("Digite a quantidade de colunas da 1ª matriz: ");
         int qtyColumns = scanner.nextInt();
 
-        int[][] preMatrix1 = new int[qtyLines][qtyColumns];
+        double[][] preMatrix1 = new double[qtyLines][qtyColumns];
 
         System.out.println("1ª Matriz:");
         for (int i = 0; i < qtyLines; i++) {
@@ -162,7 +163,7 @@ public class Main {
 
         System.out.println("-------------------- \n");
 
-        int[][] preMatrix2 = new int[qtyLines][qtyColumns];
+        double[][] preMatrix2 = new double[qtyLines][qtyColumns];
 
         System.out.println("2ª Matriz:");
         for (int i = 0; i < qtyLines; i++) {
@@ -193,7 +194,7 @@ public class Main {
         System.out.println("Digite a quantidade de colunas da matriz: ");
         int qtyColumns = scanner.nextInt();
 
-        int[][] preMatrix = new int[qtyLines][qtyColumns];
+        double[][] preMatrix = new double[qtyLines][qtyColumns];
 
         System.out.println("Matriz:");
         for (int i = 0; i < qtyLines; i++) {
@@ -229,7 +230,7 @@ public class Main {
         System.out.println("Digite a quantidade de colunas da 1ª matriz: ");
         int qtyColumns1 = scanner.nextInt();
 
-        int[][] preMatrix1 = new int[qtyLines1][qtyColumns1];
+        double[][] preMatrix1 = new double[qtyLines1][qtyColumns1];
 
         System.out.println("1ª Matriz:");
         for (int i = 0; i < qtyLines1; i++) {
@@ -246,7 +247,7 @@ public class Main {
         System.out.println("Digite a quantidade de colunas da 2ª matriz: ");
         int qtyColumns2 = scanner.nextInt();
 
-        int[][] preMatrix2 = new int[qtyLines2][qtyColumns2];
+        double[][] preMatrix2 = new double[qtyLines2][qtyColumns2];
 
         System.out.println("2ª Matriz:");
         for (int i = 0; i < qtyLines2; i++) {
@@ -263,7 +264,7 @@ public class Main {
         showMatrix(matrix1, matrix2);
 
         System.out.println("Matriz 1 * Matriz 2: ");
-        showMatrix(algebra.times(matrix1, matrix2));
+        showMatrix(algebra.dot(matrix1, matrix2));
     }
 
     public static void gauss() {
@@ -279,7 +280,7 @@ public class Main {
         System.out.println("Digite a quantidade de colunas da matriz: ");
         int qtyColumns = scanner.nextInt();
 
-        int[][] preMatrix = new int[qtyLines][qtyColumns];
+        double[][] preMatrix = new double[qtyLines][qtyColumns];
 
         System.out.println("Matriz:");
         for (int i = 0; i < qtyLines; i++) {
@@ -311,7 +312,7 @@ public class Main {
         System.out.println("Digite a quantidade de colunas da matriz: ");
         int qtyColumns = scanner.nextInt();
 
-        int[][] preMatrix = new int[qtyLines][qtyColumns];
+        double[][] preMatrix = new double[qtyLines][qtyColumns];
 
         System.out.println("Matriz:");
         for (int i = 0; i < qtyLines; i++) {

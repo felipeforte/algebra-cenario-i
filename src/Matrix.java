@@ -1,9 +1,9 @@
 public class Matrix {
     private int rows;
     private int cols;
-    private int[][] elements;
+    private double[][] elements;
 
-    public Matrix(int rows, int cols, int[][] elements) {
+    public Matrix(int rows, int cols, double[][] elements) {
         this.rows = rows;
         this.cols = cols;
         this.elements = elements;
@@ -17,28 +17,28 @@ public class Matrix {
         return rows;
     }
 
-    public int[] getRow(int i) {
+    public double[] getRow(int i) {
         return elements[i];
     }
 
-    public void setRow(int i, int[] row) {
+    public void setRow(int i, double[] row) {
         elements[i] = row;
     }
 
-    public int get(int row, int column) {
+    public double get(int row, int column) {
         return elements[row][column];
     }
 
-    public void set(int row, int column, int value) {
+    public void set(int row, int column, double value) {
         elements[row][column] = value;
     }
 
-    public int[][] getElements() {
+    public double[][] getElements() {
         return elements;
     }
 
     public void swapRows(int i, int j) {
-        int[] temp = elements[i];
+        double[] temp = elements[i];
         elements[i] = elements[j];
         elements[j] = temp;
     }
