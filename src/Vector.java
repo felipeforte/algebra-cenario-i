@@ -1,14 +1,14 @@
 public class Vector {
-    private int[] vector;
+    private double[] vector;
 
-    public Vector(int dimension, int[] vector) {
-        this.vector = new int[dimension];
+    public Vector(int dimension, double[] vector) {
+        this.vector = new double[dimension];
         for (int i = 0; i < dimension; i++) {
             this.vector[i] = vector[i];
         }
     }
 
-    public int get(int index) {
+    public double get(int index) {
         return vector[index];
     }
 
