@@ -5,10 +5,18 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-        // Definir a matriz aumentada
+        // Matrizes de exemplo
 //        double[][] matriz = {{1, 2, 4, 0},
-//                {0, 1, 2, 9},
-//                {0, 0, 0, 0}};
+//                             {0, 1, 2, 9},
+//                             {0, 0, 1, 3}};
+//
+//                            {{2, 4, 2, 0},
+//                             {1, -2, 4, 15},
+//                             {-1, 1, -2, -10},
+//
+//                            {{3, -1, -2, 5},
+//                             {-1, 2, -1, 0},
+//                             {2, -2, 1, 4},
 
         Scanner scanner = new Scanner(System.in);
 
@@ -123,9 +131,9 @@ public class Main {
         double[][] preMatrix = new double[qtyLines][qtyColumns];
 
         for (int i = 0; i < qtyLines; i++) {
+            System.out.println("Digite o valor da linha " + (i + 1));
             for (int j = 0; j < qtyColumns; j++) {
-                System.out.println("Digite o valor da linha " + (i + 1) + " e coluna " + (j + 1) + ": ");
-                preMatrix[i][j] = scanner.nextInt();
+                preMatrix[i][j] = scanner.nextDouble();
             }
         }
 
@@ -155,9 +163,9 @@ public class Main {
 
         System.out.println("1ª Matriz:");
         for (int i = 0; i < qtyLines; i++) {
+            System.out.println("Digite o valor da linha " + (i + 1));
             for (int j = 0; j < qtyColumns; j++) {
-                System.out.println("Digite o valor da linha " + (i + 1) + " e coluna " + (j + 1) + ": ");
-                preMatrix1[i][j] = scanner.nextInt();
+                preMatrix1[i][j] = scanner.nextDouble();
             }
         }
 
@@ -167,9 +175,9 @@ public class Main {
 
         System.out.println("2ª Matriz:");
         for (int i = 0; i < qtyLines; i++) {
+            System.out.println("Digite o valor da linha " + (i + 1));
             for (int j = 0; j < qtyColumns; j++) {
-                System.out.println("Digite o valor da linha " + (i + 1) + " e coluna " + (j + 1) + ": ");
-                preMatrix2[i][j] = scanner.nextInt();
+                preMatrix2[i][j] = scanner.nextDouble();
             }
         }
 
@@ -198,9 +206,9 @@ public class Main {
 
         System.out.println("Matriz:");
         for (int i = 0; i < qtyLines; i++) {
+            System.out.println("Digite o valor da linha " + (i + 1));
             for (int j = 0; j < qtyColumns; j++) {
-                System.out.println("Digite o valor da linha " + (i + 1) + " e coluna " + (j + 1) + ": ");
-                preMatrix[i][j] = scanner.nextInt();
+                preMatrix[i][j] = scanner.nextDouble();
             }
         }
 
@@ -234,9 +242,9 @@ public class Main {
 
         System.out.println("1ª Matriz:");
         for (int i = 0; i < qtyLines1; i++) {
+            System.out.println("Digite o valor da linha " + (i + 1));
             for (int j = 0; j < qtyColumns1; j++) {
-                System.out.println("Digite o valor da linha " + (i + 1) + " e coluna " + (j + 1) + ": ");
-                preMatrix1[i][j] = scanner.nextInt();
+                preMatrix1[i][j] = scanner.nextDouble();
             }
         }
 
@@ -251,9 +259,9 @@ public class Main {
 
         System.out.println("2ª Matriz:");
         for (int i = 0; i < qtyLines2; i++) {
+            System.out.println("Digite o valor da linha " + (i + 1));
             for (int j = 0; j < qtyColumns2; j++) {
-                System.out.println("Digite o valor da linha " + (i + 1) + " e coluna " + (j + 1) + ": ");
-                preMatrix2[i][j] = scanner.nextInt();
+                preMatrix2[i][j] = scanner.nextDouble();
             }
         }
 
@@ -284,9 +292,9 @@ public class Main {
 
         System.out.println("Matriz:");
         for (int i = 0; i < qtyLines; i++) {
+            System.out.println("Digite o valor da linha " + (i + 1));
             for (int j = 0; j < qtyColumns; j++) {
-                System.out.println("Digite o valor da linha " + (i + 1) + " e coluna " + (j + 1) + ": ");
-                preMatrix[i][j] = scanner.nextInt();
+                preMatrix[i][j] = scanner.nextDouble();
             }
         }
 
@@ -316,9 +324,9 @@ public class Main {
 
         System.out.println("Matriz:");
         for (int i = 0; i < qtyLines; i++) {
+            System.out.println("Digite o valor da linha " + (i + 1));
             for (int j = 0; j < qtyColumns; j++) {
-                System.out.println("Digite o valor da linha " + (i + 1) + " e coluna " + (j + 1) + ": ");
-                preMatrix[i][j] = scanner.nextInt();
+                preMatrix[i][j] = scanner.nextDouble();
             }
         }
 
