@@ -1,30 +1,37 @@
 public class Vector {
-    public Vector(int dimensao, int[] elementos) {
-        this.dimensao = dimensao;
-        this.elementos = elementos;
-    }
-    private int dimensao;
-    private int[] elementos;
+    private double[] vector;
 
-
-    public int getElementos(int i) {
-        return elementos[i];
-    }
-
-
-    public void set(int i, int valor) {
-        this.elementos[i] = valor;
-    }
-
-    public String paraString() {
-        String n = "";
-
-        for(int i= 0; i<elementos.length;i++){
-            n+= elementos[i];
-            if (!(i ==elementos.length-1)) {
-                n+=" ";
-            }
+    public Vector(int dimension, double[] vector) {
+        this.vector = new double[dimension];
+        for (int i = 0; i < dimension; i++) {
+            this.vector[i] = vector[i];
         }
-        return n;
     }
+
+    public double get(int index) {
+        return vector[index];
+    }
+
+    public void set(int index, int value) {
+        vector[index] = value;
+    }
+
+    public int getLength() {
+        return vector.length;
+    }
+
+    public String toString() {
+        StringBuilder str = new StringBuilder();
+
+        //forma reduzida
+        //        for (int j : vector) {
+        //            str.append(j).append(" ");
+        //        }
+        for (int i = 0; i < vector.length; i++) {
+            str.append(vector[i]).append(" ");
+        }
+
+        return str.toString();
+    }
+
 }

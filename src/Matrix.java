@@ -1,45 +1,59 @@
 public class Matrix {
-    private int linhas;
-    private int colunas;
-    private int[][] elementos;
+    private int rows;
+    private int cols;
+    private double[][] elements;
 
-    public Matrix(int linhas, int colunas, int[] vetor) {
-        if (linhas * colunas != vetor.length) {
-            System.out.println("Matriz inválida! O vetor tem um tamanho diferente da matriz!");
-        }
-        this.linhas = linhas;
-        this.colunas = colunas;
-        this.elementos = new int[linhas][colunas];
-        int indice_vetor = 0;
-        for (int i = 0; i < linhas; i++) {
-            for (int j = 0; j < colunas; j++) {
-                this.elementos[i][j] = vetor[indice_vetor];
-                indice_vetor++;
+    public Matrix(int rows, int cols, double[][] elements) {
+        this.rows = rows;
+        this.cols = cols;
+        this.elements = elements;
+    }
+
+    public int getCols() {
+        return cols;
+    }
+
+    public int getRows() {
+        return rows;
+    }
+
+    public double[] getRow(int i) {
+        return elements[i];
+    }
+
+    public void setRow(int i, double[] row) {
+        elements[i] = row;
+    }
+
+    public double get(int row, int column) {
+        return elements[row][column];
+    }
+
+    public void set(int row, int column, double value) {
+        elements[row][column] = value;
+    }
+
+    public double[][] getElements() {
+        return elements;
+    }
+
+    public void swapRows(int i, int j) {
+        double[] temp = elements[i];
+        elements[i] = elements[j];
+        elements[j] = temp;
+    }
+
+    public String toString() {
+        StringBuilder str = new StringBuilder();
+
+        for (int i = 0; i < rows; i++) {
+            str.append("| ");
+            for (int j = 0; j < cols; j++) {
+                str.append(elements[i][j]).append(" ");
             }
+            str.append("|\n");
         }
-    }
 
-    public int getLinhas() {
-        return linhas;
-    }
-
-    public void setLinhas(int linhas) {
-        this.linhas = linhas;
-    }
-
-    public int getColunas() {
-        return colunas;
-    }
-
-    public void setColunas(int colunas) {
-        this.colunas = colunas;
-    }
-
-    public int get(int i, int j) {
-        return this.elementos[i - 1][j - 1];
-    }
-
-    public void set(int i, int j, int valor) {
-        this.elementos[i - 1][j - 1] = valor;
+        return str.toString();
     }
 }
