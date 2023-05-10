@@ -44,6 +44,9 @@ public class Main {
                 case 6:
                     solve();
                     break;
+                case 7:
+                    vectorOperations();
+                    break;
                 default:
                     System.out.println(ConsoleColors.RED_BACKGROUND_BRIGHT + ConsoleColors.BLACK_BOLD);
                     System.out.println("Opção inválida\n");
@@ -71,6 +74,7 @@ public class Main {
         System.out.println("4 - Multiplicar duas matrizes");
         System.out.println("5 - Resolver um sistema linear");
         System.out.println("6 - Solve");
+        System.out.println("7 - Operaçoes com vetores");
         System.out.println(ConsoleColors.RED_BACKGROUND_BRIGHT + ConsoleColors.BLACK_BOLD + "Versão [BETA]");
         System.out.println(ConsoleColors.RESET);
     }
@@ -104,6 +108,12 @@ public class Main {
                         matrix2 +
                         ConsoleColors.RESET
         );
+    }
+
+    public static void vectorOperations() {
+        TransformationMenu transformationMenu = new TransformationMenu();
+
+        transformationMenu.showOptions();
     }
 
     public static void transposeMatrix() {
