@@ -27,9 +27,16 @@ public class Vector {
         //        for (int j : vector) {
         //            str.append(j).append(" ");
         //        }
+        str.append("( ");
         for (int i = 0; i < vector.length; i++) {
-            str.append(vector[i]).append(" ");
+            //check if is the last element
+            if (i == vector.length - 1) {
+                str.append(vector[i]);
+                break;
+            }
+            str.append(vector[i]).append(" , ");
         }
+        str.append(" )");
 
         return str.toString();
     }
