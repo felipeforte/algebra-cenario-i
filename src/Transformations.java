@@ -96,14 +96,133 @@ public class Transformations {
         return vetorFinal;
     }
 
-//    public Vector rotation2D(Vector v, double ang) {
-//    }
-//    public Vector rotation3DX(Vector v, double ang) {
-//    }
-//    public Vector rotation3DY(Vector v, double ang) {
-//    }
-//    public Vector rotation3DZ(Vector v, double ang) {
-//    }
+    public Vector rotation2D(Vector v, double ang) {
+        double rad = Math.toRadians(ang);
+        double sin = Math.sin(rad);
+        double cos = Math.cos(rad);
+
+        double x = v.get(0);
+        double y = v.get(1);
+
+        v.set(0, x * cos - y * sin);
+        v.set(1, x * sin + y * cos);
+
+        return v;
+    }
+
+    public Vector rotation3DX(Vector v, double ang) {
+        // Cria uma array com uma coordenada homogênea, ou seja com uma dimensão a mais que o vetor
+        double[] array = new double[v.getLength() + 1];
+        // Preenche elementos do vetor no array
+        for (int i = 0; i < v.getLength(); i++) {
+            array[i] = v.get(i);
+        }
+        // Adiciona a coordenada homogênea
+        array[v.getLength()] = 1;
+
+        ang = Math.toRadians(ang);
+
+        // Cria a matriz de transformação
+        double[][] transMatriz = {
+                {1, 0, 0},
+                {0, Math.cos(ang), -Math.sin(ang)},
+                {0, Math.sin(ang), Math.cos(ang)}
+        };
+        // Realiza a multiplicação da matriz pelo vetor e armazena o resultado no vetorResultante
+        double[] vetorResultante = new double[3];
+        for (int i = 0; i < 3; i++) {
+            double soma = 0;
+            for (int j = 0; j < 3; j++) {
+                soma += transMatriz[i][j] * array[j];
+            }
+            vetorResultante[i] = soma;
+        }
+
+        // Transfere os elementos do vetor resultante em um vetor sem a coordenada homogênea
+        double[] vetorPreFinal = new double[3];
+        for (int i = 0; i < 3; i++) {
+            vetorPreFinal[i] = vetorResultante[i];
+        }
+
+        Vector vetorFinal = new Vector(3, vetorPreFinal);
+        return vetorFinal;
+    }
+
+    public Vector rotation3DY(Vector v, double ang) {
+        // Cria uma array com uma coordenada homogênea, ou seja com uma dimensão a mais que o vetor
+        double[] array = new double[v.getLength() + 1];
+        // Preenche elementos do vetor no array
+        for (int i = 0; i < v.getLength(); i++) {
+            array[i] = v.get(i);
+        }
+        // Adiciona a coordenada homogênea
+        array[v.getLength()] = 1;
+
+        ang = Math.toRadians(ang);
+
+        // Cria a matriz de transformação
+        double[][] transMatriz = {
+                {Math.cos(ang), 0, Math.sin(ang)},
+                {0, 1, 0},
+                {-Math.sin(ang), 0, Math.cos(ang)}
+        };
+        // Realiza a multiplicação da matriz pelo vetor e armazena o resultado no vetorResultante
+        double[] vetorResultante = new double[3];
+        for (int i = 0; i < 3; i++) {
+            double soma = 0;
+            for (int j = 0; j < 3; j++) {
+                soma += transMatriz[i][j] * array[j];
+            }
+            vetorResultante[i] = soma;
+        }
+
+        // Transfere os elementos do vetor resultante em um vetor sem a coordenada homogênea
+        double[] vetorPreFinal = new double[3];
+        for (int i = 0; i < 3; i++) {
+            vetorPreFinal[i] = vetorResultante[i];
+        }
+
+        return new Vector(3, vetorPreFinal);
+    }
+
+    public Vector rotation3DZ(Vector v, double ang) {
+        // Cria uma array com uma coordenada homogênea, ou seja com uma dimensão a mais que o vetor
+        double[] array = new double[v.getLength() + 1];
+        // Preenche elementos do vetor no array
+        for (int i = 0; i < v.getLength(); i++) {
+            array[i] = v.get(i);
+        }
+        // Adiciona a coordenada homogênea
+        array[v.getLength()] = 1;
+
+        ang = Math.toRadians(ang);
+
+        // Cria a matriz de transformação
+        double[][] transMatriz = {
+                {Math.cos(ang), -Math.sin(ang), 0},
+                {Math.sin(ang), Math.cos(ang), 0},
+                {0, 0, 1}
+        };
+        // Realiza a multiplicação da matriz pelo vetor e armazena o resultado no vetorResultante
+        double[] vetorResultante = new double[3];
+        for (int i = 0; i < 3; i++) {
+            double soma = 0;
+            for (int j = 0; j < 3; j++) {
+                soma += transMatriz[i][j] * array[j];
+            }
+            vetorResultante[i] = soma;
+        }
+
+        // Transfere os elementos do vetor resultante em um vetor sem a coordenada homogênea
+        double[] vetorPreFinal = new double[3];
+        for (int i = 0; i < 3; i++) {
+            vetorPreFinal[i] = vetorResultante[i];
+        }
+
+        Vector vetorFinal = new Vector(3, vetorPreFinal);
+        return vetorFinal;
+    }
+
     public Vector reflection2DX(Vector v) {
         // Cria uma array com uma coordenada homogênea, ou seja com uma dimensão a mais que o vetor
         double[] array = new double[v.getLength() + 1];
@@ -454,6 +573,37 @@ public class Transformations {
 
         return new Vector(3, vetorPreFinal);
     }
-//    public Vector shearing(Vector v, double kx, double ky) {
-//    }
+    public Vector shearing2D(Vector v, double kx, double ky) {
+        // Cria uma array com uma coordenada homogênea, ou seja com uma dimensão a mais que o vetor
+        double[] array = new double[v.getLength() + 1];
+        // Preenche elementos do vetor no array
+        for (int i = 0; i < v.getLength(); i++) {
+            array[i] = v.get(i);
+        }
+        // Adiciona a coordenada homogênea
+        array[v.getLength()] = 1;
+
+        // Cria a matriz de transformação
+        double[][] transMatriz = {
+                {1, kx},
+                {ky, 1}
+        };
+        // Realiza a multiplicação da matriz pelo vetor e armazena o resultado no vetorResultante
+        double[] vetorResultante = new double[3];
+        for (int i = 0; i < 3; i++) {
+            double soma = 0;
+            for (int j = 0; j < 3; j++) {
+                soma += transMatriz[i][j] * array[j];
+            }
+            vetorResultante[i] = soma;
+        }
+
+        // Transfere os elementos do vetor resultante em um vetor sem a coordenada homogênea
+        double[] vetorPreFinal = new double[2];
+        for (int i = 0; i < 2; i++) {
+            vetorPreFinal[i] = vetorResultante[i];
+        }
+
+        return new Vector(2, vetorPreFinal);
+    }
 }

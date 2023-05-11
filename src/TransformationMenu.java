@@ -19,6 +19,18 @@ public class TransformationMenu {
                 case 2:
                     translation3D();
                     break;
+                case 3:
+                    rotation2D();
+                    break;
+                case 4:
+                    rotation3D("x");
+                    break;
+                case 5:
+                    rotation3D("y");
+                    break;
+                case 6:
+                    rotation3D("z");
+                    break;
                 case 7:
                     reflection2D("x");
                     break;
@@ -48,6 +60,9 @@ public class TransformationMenu {
                     break;
                 case 16:
                     projection3D("z");
+                    break;
+                case 17:
+                    shear();
                     break;
                 default:
                     System.out.println(ConsoleColors.RED_BACKGROUND_BRIGHT + ConsoleColors.BLACK_BOLD);
@@ -96,7 +111,93 @@ public class TransformationMenu {
         System.out.println("Pressione ENTER para continuar...");
         scanner.nextLine();
     }
-    
+
+    public void rotation2D() {
+        System.out.println(ConsoleColors.BLUE_BACKGROUND_BRIGHT + ConsoleColors.BLACK_BOLD + "ROTAÇÃO 2D");
+        System.out.println(ConsoleColors.RESET);
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Digite os elementos (X,Y) do vetor: ");
+        String[] elements = scanner.nextLine().split(" ");
+
+        if (elements.length != 2) {
+            System.out.println(ConsoleColors.RED_BACKGROUND_BRIGHT + ConsoleColors.BLACK_BOLD);
+            System.out.println("O vetor deve ter 2 elementos\n");
+            System.out.println(ConsoleColors.RESET);
+            return;
+        }
+
+        double[] vector = new double[elements.length];
+        for (int i = 0; i < elements.length; i++) {
+            vector[i] = Double.parseDouble(elements[i]);
+        }
+
+        System.out.println("Digite o ângulo de rotação: ");
+        double angle = scanner.nextDouble();
+
+        Transformations transformations = new Transformations();
+        Vector result = transformations.rotation2D(new Vector(vector.length, vector), angle);
+
+        System.out.println(ConsoleColors.GREEN_BACKGROUND_BRIGHT + ConsoleColors.BLACK_BOLD);
+        System.out.println("Resultado: " + result.toString() + "\n");
+        System.out.println(ConsoleColors.RESET);
+
+        this.putEnterPrompt();
+    }
+
+    public void rotation3D(String axis) {
+        System.out.println(ConsoleColors.BLUE_BACKGROUND_BRIGHT + ConsoleColors.BLACK_BOLD + "ROTAÇÃO 3D " + axis.toUpperCase());
+        System.out.println(ConsoleColors.RESET);
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Digite os elementos (X,Y,Z) do vetor: ");
+        String[] elements = scanner.nextLine().split(" ");
+
+        if (elements.length != 3) {
+            System.out.println(ConsoleColors.RED_BACKGROUND_BRIGHT + ConsoleColors.BLACK_BOLD);
+            System.out.println("O vetor deve ter 3 elementos\n");
+            System.out.println(ConsoleColors.RESET);
+            return;
+        }
+
+        double[] vector = new double[elements.length];
+        for (int i = 0; i < elements.length; i++) {
+            vector[i] = Double.parseDouble(elements[i]);
+        }
+
+        System.out.println("Digite o ângulo de rotação: ");
+        double angle = scanner.nextDouble();
+
+        Transformations transformations = new Transformations();
+        Vector result;
+        Vector mountedVector = new Vector(3, new double[]{vector[0], vector[1], vector[2]});
+
+        switch (axis) {
+            case "x":
+                result = transformations.rotation3DX(mountedVector, angle);
+                break;
+            case "y":
+                result = transformations.rotation3DY(mountedVector, angle);
+                break;
+            case "z":
+                result = transformations.rotation3DZ(mountedVector, angle);
+                break;
+            default:
+                System.out.println(ConsoleColors.RED_BACKGROUND_BRIGHT + ConsoleColors.BLACK_BOLD);
+                System.out.println("Eixo inválido\n");
+                System.out.println(ConsoleColors.RESET);
+                return;
+        }
+
+        System.out.println(ConsoleColors.GREEN_BACKGROUND_BRIGHT + ConsoleColors.BLACK_BOLD);
+        System.out.println("Resultado: " + result.toString() + "\n");
+        System.out.println(ConsoleColors.RESET);
+
+        this.putEnterPrompt();
+    }
+
     public void translation2D() {
         System.out.println(ConsoleColors.BLUE_BACKGROUND_BRIGHT + ConsoleColors.BLACK_BOLD + "TRANSLAÇÃO 2D");
         System.out.println(ConsoleColors.RESET);
@@ -140,7 +241,7 @@ public class TransformationMenu {
         Vector result;
         Vector mountedVector = new Vector(2, new double[]{vector[0], vector[1]});
 
-        result = transformations.translate2D(mountedVector,translacao[0],translacao[1]);
+        result = transformations.translate2D(mountedVector, translacao[0], translacao[1]);
 
         System.out.println(ConsoleColors.GREEN_BACKGROUND_BRIGHT + ConsoleColors.BLACK_BOLD);
         System.out.println("Resultado: " + result.toString() + "\n");
@@ -197,7 +298,7 @@ public class TransformationMenu {
         Vector result;
         Vector mountedVector = new Vector(3, new double[]{vector[0], vector[1], vector[2]});
 
-        result = transformations.translate3D(mountedVector,translacao[0],translacao[1],translacao[2]);
+        result = transformations.translate3D(mountedVector, translacao[0], translacao[1], translacao[2]);
 
         System.out.println(ConsoleColors.GREEN_BACKGROUND_BRIGHT + ConsoleColors.BLACK_BOLD);
         System.out.println("Resultado: " + result.toString() + "\n");
@@ -350,6 +451,55 @@ public class TransformationMenu {
         } else {
             result = transformations.projection3DZ(mountedVector);
         }
+
+        System.out.println(ConsoleColors.GREEN_BACKGROUND_BRIGHT + ConsoleColors.BLACK_BOLD);
+        System.out.println("Resultado: " + result.toString() + "\n");
+        System.out.println(ConsoleColors.RESET);
+
+        this.putEnterPrompt();
+    }
+
+    public void shear(){
+        System.out.println(ConsoleColors.BLUE_BACKGROUND_BRIGHT + ConsoleColors.BLACK_BOLD + "CISALHAMENTO 2D");
+        System.out.println(ConsoleColors.RESET);
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Digite os elementos (X,Y) do vetor: ");
+        String[] elements = scanner.nextLine().split(" ");
+
+        if (elements.length != 2) {
+            System.out.println(ConsoleColors.RED_BACKGROUND_BRIGHT + ConsoleColors.BLACK_BOLD);
+            System.out.println("O vetor deve ter 2 elementos\n");
+            System.out.println(ConsoleColors.RESET);
+            return;
+        }
+
+        double[] vector = new double[elements.length];
+        for (int i = 0; i < elements.length; i++) {
+            vector[i] = Double.parseDouble(elements[i]);
+        }
+
+        //pega os fatores de cisalhamento
+        System.out.println("Digite os fatores de cisalhamento (X,Y): ");
+        String[] shearingFactors = scanner.nextLine().split(" ");
+
+        if (shearingFactors.length != 2) {
+            System.out.println(ConsoleColors.RED_BACKGROUND_BRIGHT + ConsoleColors.BLACK_BOLD);
+            System.out.println("O vetor deve ter 2 elementos\n");
+            System.out.println(ConsoleColors.RESET);
+            return;
+        }
+
+        double[] shearingFactorsVector = new double[shearingFactors.length];
+        for (int i = 0; i < shearingFactors.length; i++) {
+            shearingFactorsVector[i] = Double.parseDouble(shearingFactors[i]);
+        }
+
+        Transformations transformations = new Transformations();
+        Vector result;
+        Vector mountedVector = new Vector(2, new double[]{vector[0], vector[1]});
+        result = transformations.shearing2D(mountedVector, shearingFactorsVector[0], shearingFactorsVector[1]);
 
         System.out.println(ConsoleColors.GREEN_BACKGROUND_BRIGHT + ConsoleColors.BLACK_BOLD);
         System.out.println("Resultado: " + result.toString() + "\n");

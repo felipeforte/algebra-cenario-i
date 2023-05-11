@@ -15,6 +15,9 @@ public class Vector {
     public void set(int index, int value) {
         vector[index] = value;
     }
+    public void set(int index, double value) {
+        vector[index] = value;
+    }
 
     public int getLength() {
         return vector.length;
