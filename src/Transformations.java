@@ -144,8 +144,7 @@ public class Transformations {
             vetorPreFinal[i] = vetorResultante[i];
         }
 
-        Vector vetorFinal = new Vector(3, vetorPreFinal);
-        return vetorFinal;
+        return new Vector(3, vetorPreFinal);
     }
 
     public Vector rotation3DY(Vector v, double ang) {
@@ -573,36 +572,17 @@ public class Transformations {
 
         return new Vector(3, vetorPreFinal);
     }
-    public Vector shearing2D(Vector v, double kx, double ky) {
-        // Cria uma array com uma coordenada homogênea, ou seja com uma dimensão a mais que o vetor
-        double[] array = new double[v.getLength() + 1];
-        // Preenche elementos do vetor no array
-        for (int i = 0; i < v.getLength(); i++) {
-            array[i] = v.get(i);
-        }
-        // Adiciona a coordenada homogênea
-        array[v.getLength()] = 1;
 
-        // Cria a matriz de transformação
+    public Vector shearing2D(Vector v, double kx, double ky) {
         double[][] transMatriz = {
                 {1, kx},
                 {ky, 1}
         };
-        // Realiza a multiplicação da matriz pelo vetor e armazena o resultado no vetorResultante
-        double[] vetorResultante = new double[3];
-        for (int i = 0; i < 3; i++) {
-            double soma = 0;
-            for (int j = 0; j < 3; j++) {
-                soma += transMatriz[i][j] * array[j];
-            }
-            vetorResultante[i] = soma;
-        }
 
-        // Transfere os elementos do vetor resultante em um vetor sem a coordenada homogênea
-        double[] vetorPreFinal = new double[2];
-        for (int i = 0; i < 2; i++) {
-            vetorPreFinal[i] = vetorResultante[i];
-        }
+        double x = v.get(0) * (transMatriz[0][0] + transMatriz[0][1]);
+        double y = v.get(1) * (transMatriz[1][0] + transMatriz[1][1]);
+
+        double[] vetorPreFinal = {x, y};
 
         return new Vector(2, vetorPreFinal);
     }
