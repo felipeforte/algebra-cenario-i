@@ -14,9 +14,10 @@ public class TransformationMenu {
         while (option != 0) {
             switch (option) {
                 case 1:
-                    System.out.println(ConsoleColors.BLUE_BACKGROUND_BRIGHT + ConsoleColors.BLACK_BOLD);
-                    System.out.println("Translação 2D\n");
-                    System.out.println(ConsoleColors.RESET);
+                    translation2D();
+                    break;
+                case 2:
+                    translation3D();
                     break;
                 case 7:
                     reflection2D("x");
@@ -94,6 +95,115 @@ public class TransformationMenu {
         //detect enter press
         System.out.println("Pressione ENTER para continuar...");
         scanner.nextLine();
+    }
+    
+    public void translation2D() {
+        System.out.println(ConsoleColors.BLUE_BACKGROUND_BRIGHT + ConsoleColors.BLACK_BOLD + "TRANSLAÇÃO 2D");
+        System.out.println(ConsoleColors.RESET);
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Digite os elementos (X,Y) do vetor: ");
+        String[] elements = scanner.nextLine().split(" ");
+
+        if (elements.length != 2) {
+            System.out.println(ConsoleColors.RED_BACKGROUND_BRIGHT + ConsoleColors.BLACK_BOLD);
+            System.out.println("O vetor deve ter 2 elementos\n");
+            System.out.println(ConsoleColors.RESET);
+            return;
+        }
+
+        double[] vector = new double[elements.length];
+        for (int i = 0; i < elements.length; i++) {
+            vector[i] = Double.parseDouble(elements[i]);
+        }
+
+        System.out.println("Digite a translação (X,Y) do vetor: ");
+        String[] trans = scanner.nextLine().split(" ");
+
+        double[] translacao = new double[2];
+        if (trans.length == 1) {
+            translacao[0] = Double.parseDouble(trans[0]);
+            translacao[1] = 0;
+        } else if (elements.length != 2) {
+            System.out.println(ConsoleColors.RED_BACKGROUND_BRIGHT + ConsoleColors.BLACK_BOLD);
+            System.out.println("A translação deve ter no mínimo 1 elemento e no máximo 2\n");
+            System.out.println(ConsoleColors.RESET);
+            return;
+        } else {
+            for (int i = 0; i < trans.length; i++) {
+                translacao[i] = Double.parseDouble(trans[i]);
+            }
+        }
+
+        Transformations transformations = new Transformations();
+        Vector result;
+        Vector mountedVector = new Vector(2, new double[]{vector[0], vector[1]});
+
+        result = transformations.translate2D(mountedVector,translacao[0],translacao[1]);
+
+        System.out.println(ConsoleColors.GREEN_BACKGROUND_BRIGHT + ConsoleColors.BLACK_BOLD);
+        System.out.println("Resultado: " + result.toString() + "\n");
+        System.out.println(ConsoleColors.RESET);
+
+        this.putEnterPrompt();
+    }
+
+    public void translation3D() {
+        System.out.println(ConsoleColors.BLUE_BACKGROUND_BRIGHT + ConsoleColors.BLACK_BOLD + "TRANSLAÇÃO 3D");
+        System.out.println(ConsoleColors.RESET);
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Digite os elementos (X,Y,Z) do vetor: ");
+        String[] elements = scanner.nextLine().split(" ");
+
+        if (elements.length != 3) {
+            System.out.println(ConsoleColors.RED_BACKGROUND_BRIGHT + ConsoleColors.BLACK_BOLD);
+            System.out.println("O vetor deve ter 3 elementos\n");
+            System.out.println(ConsoleColors.RESET);
+            return;
+        }
+
+        double[] vector = new double[elements.length];
+        for (int i = 0; i < elements.length; i++) {
+            vector[i] = Double.parseDouble(elements[i]);
+        }
+
+        System.out.println("Digite a translação (X,Y,Z) do vetor: ");
+        String[] trans = scanner.nextLine().split(" ");
+
+        double[] translacao = new double[3];
+        if (trans.length == 1) {
+            translacao[0] = Double.parseDouble(trans[0]);
+            translacao[1] = 0;
+            translacao[2] = 0;
+        } else if (trans.length == 2) {
+            translacao[0] = Double.parseDouble(trans[0]);
+            translacao[1] = Double.parseDouble(trans[1]);
+            translacao[2] = 0;
+        } else if (elements.length != 3) {
+            System.out.println(ConsoleColors.RED_BACKGROUND_BRIGHT + ConsoleColors.BLACK_BOLD);
+            System.out.println("A translação deve ter no mínimo 1 elemento e no máximo 3\n");
+            System.out.println(ConsoleColors.RESET);
+            return;
+        } else {
+            for (int i = 0; i < trans.length; i++) {
+                translacao[i] = Double.parseDouble(trans[i]);
+            }
+        }
+
+        Transformations transformations = new Transformations();
+        Vector result;
+        Vector mountedVector = new Vector(3, new double[]{vector[0], vector[1], vector[2]});
+
+        result = transformations.translate3D(mountedVector,translacao[0],translacao[1],translacao[2]);
+
+        System.out.println(ConsoleColors.GREEN_BACKGROUND_BRIGHT + ConsoleColors.BLACK_BOLD);
+        System.out.println("Resultado: " + result.toString() + "\n");
+        System.out.println(ConsoleColors.RESET);
+
+        this.putEnterPrompt();
     }
 
     public void reflection2D(String axis) {
